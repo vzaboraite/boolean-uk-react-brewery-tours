@@ -8,11 +8,18 @@ export default function App() {
   const [selectState, setSelectState] = useState("");
   const [breweries, setBreweries] = useState([]);
   const [cities, setCities] = useState([]);
+  /* Filter states */
+  const [type, setType] = useState("");
+  const [city, setCity] = useState([]);
+  const [search, setSearch] = useState("");
 
   console.log("State: ", {
     selectState,
     breweries,
     cities,
+    type,
+    city,
+    search,
   });
 
   /* API */
@@ -47,6 +54,49 @@ export default function App() {
     getBreweriesByState(selectState);
   };
 
+  /* Filter section handlers */
+  const handleTypeOptionsChange = (event) => {
+    console.log("Inside handleTypeOptionsFilter: ", event.target.value);
+    setType(event.target.value);
+  };
+
+  const handleCityCheckbox = (event) => {
+    console.log(
+      "Inside handleCityCheckbox: ",
+      event.target.value,
+      event.target.checked
+    );
+    const isChecked = event.target.checked;
+    const selectedCity = event.target.value;
+
+    if (isChecked) {
+      setCity([...city, selectedCity]);
+    } else {
+      const filteredCities = city.filter((city) => selectedCity !== city);
+      console.log("filtered cities: ", filteredCities);
+      setCity(filteredCities);
+    }
+  };
+
+  /* List Section handlers */
+  const handleSearchBreweriesInput = (event) => {
+    console.log("Inside handleSearchBreweriesInput: ", event.target.value);
+    setSearch(event.target.value);
+  };
+
+  const handleSearchBreweriesSubmit = (event) => {
+    event.preventDefault();
+    console.log("Inside handleSearchBreweriesSubmit: ", event.target.value);
+  };
+
+  /* Resets type and city states to initial values */
+  const handleClearAllButton = (event) => {
+    console.log("Inside handleClearAllButton: ", event.target);
+    setType("");
+    setCity([]);
+    setSearch("");
+  };
+
   /* COMPONENT */
   return (
     <>
@@ -56,8 +106,17 @@ export default function App() {
         onSubmit={handleSelectStateSubmit}
       />
       <main>
-        <FilterSection cities={cities} />
-        <ListSection breweries={breweries} />
+        <FilterSection
+          cities={cities}
+          handleClearAllButton={handleClearAllButton}
+          handleTypeOptionsChange={handleTypeOptionsChange}
+          handleCityCheckbox={handleCityCheckbox}
+        />
+        <ListSection
+          breweries={breweries}
+          onChange={handleSearchBreweriesInput}
+          onSubmit={handleSearchBreweriesSubmit}
+        />
       </main>
     </>
   );
