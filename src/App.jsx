@@ -73,11 +73,22 @@ export default function App() {
             <button className="clear-all-btn">clear all</button>
           </div>
           <form id="filter-by-city-form">
-            <input type="checkbox" name="chardon" value="chardon" />
-            <label htmlFor="chardon">Chardon</label>
-            <input type="checkbox" name="cincinnati" value="cincinnati" />
-            <label htmlFor="cincinnati">Cincinnati</label>
-            {/* // More checkboxes */}
+            {cities.map((city) => {
+              // console.log("Inside cities map: ", city);
+              const lowercasedCity = city.toLowerCase();
+              return (
+                // Here using explicit `React.Fragment` in order to be able to use `key` attribute
+                /* Resource: https://reactjs.org/docs/fragments.html => `Keyed Fragments` */
+                <React.Fragment key={city}>
+                  <input
+                    type="checkbox"
+                    name={lowercasedCity}
+                    value={lowercasedCity}
+                  />
+                  <label htmlFor={lowercasedCity}>{city}</label>
+                </React.Fragment>
+              );
+            })}
           </form>
         </aside>
         {/* LIST SECTION */}
