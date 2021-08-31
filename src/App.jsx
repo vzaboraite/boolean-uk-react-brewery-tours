@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
+import FilterSection from "./components/FilterSection";
 import Header from "./components/Header";
+import ListSection from "./components/ListSection";
 
 export default function App() {
   /* STATE */
@@ -54,100 +56,8 @@ export default function App() {
         onSubmit={handleSelectStateSubmit}
       />
       <main>
-        {/* FILTER SECTION */}
-        <aside className="filters-section">
-          <h2>Filter By:</h2>
-          <form id="filter-by-type-form" autocompete="off">
-            <label htmlFor="filter-by-type">
-              <h3>Type of Brewery</h3>
-            </label>
-            <select name="filter-by-type" id="filter-by-type">
-              <option value="">Select a type...</option>
-              <option value="micro">Micro</option>
-              <option value="regional">Regional</option>
-              <option value="brewpub">Brewpub</option>
-            </select>
-          </form>
-          <div className="filter-by-city-heading">
-            <h3>Cities</h3>
-            <button className="clear-all-btn">clear all</button>
-          </div>
-          <form id="filter-by-city-form">
-            {cities.map((city) => {
-              // console.log("Inside cities map: ", city);
-              const lowercasedCity = city.toLowerCase();
-              return (
-                // Here using explicit `React.Fragment` in order to be able to use `key` attribute
-                /* Resource: https://reactjs.org/docs/fragments.html => `Keyed Fragments` */
-                <React.Fragment key={city}>
-                  <input
-                    type="checkbox"
-                    name={lowercasedCity}
-                    value={lowercasedCity}
-                  />
-                  <label htmlFor={lowercasedCity}>{city}</label>
-                </React.Fragment>
-              );
-            })}
-          </form>
-        </aside>
-        {/* LIST SECTION */}
-        <h1>List of Breweries from New York</h1>
-        <header className="search-bar">
-          <form id="search-breweries-form" autoComplete="off">
-            <label htmlFor="search-breweries">
-              <h2>Search breweries:</h2>
-            </label>
-            <input id="search-breweries" name="search-breweries" type="text" />
-          </form>
-        </header>
-        <article>
-          <ul className="breweries-list">
-            {breweries.map((brewery) => {
-              // console.log("Inside breweries map: ", brewery);
-              /* Destructuring brewery object to get necessary keys for data rendering */
-              const {
-                id,
-                name,
-                brewery_type: breweryType,
-                street,
-                city,
-                postal_code: postalCode,
-                phone,
-                website_url: websiteUrl,
-              } = brewery;
-
-              return (
-                <li key={id}>
-                  <h2>{name}</h2>
-                  <div className="type">{breweryType}</div>
-                  <section className="address">
-                    <h3>Address:</h3>
-                    <p>{street ? street : "N/A"}</p>
-                    <p>
-                      <strong>
-                        {city}, {postalCode}
-                      </strong>
-                    </p>
-                  </section>
-                  <section className="phone">
-                    <h3>Phone:</h3>
-                    <p>{phone ? phone : "N/A"}</p>
-                  </section>
-                  <section className="booking">
-                    <button>Book a tour</button>
-                  </section>
-                  <section className="link">
-                    <a href={websiteUrl} target="_blank" rel="noreferrer">
-                      Visit Website
-                    </a>
-                  </section>
-                  {/* Conditionally rendered BookingForm */}
-                </li>
-              );
-            })}
-          </ul>
-        </article>
+        <FilterSection cities={cities} />
+        <ListSection breweries={breweries} />
       </main>
     </>
   );
