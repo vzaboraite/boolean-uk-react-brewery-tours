@@ -92,35 +92,49 @@ export default function App() {
         </header>
         <article>
           <ul className="breweries-list">
-            <li>
-              <h2>12 Gates Brewing Company</h2>
-              <div className="type">brewpub</div>
-              <section className="address">
-                <h3>Address:</h3>
-                <p>80 Earhart Dr Ste 20</p>
-                <p>
-                  <strong>Williamsville, 14221-7804</strong>
-                </p>
-              </section>
-              <section className="phone">
-                <h3>Phone:</h3>
-                <p>7169066600</p>
-              </section>
-              <section className="booking">
-                <button>Book a tour</button>
-              </section>
-              <section className="link">
-                <a
-                  href="http://www.12gatesbrewing.com"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Visit Website
-                </a>
-              </section>
-              {/* Conditionally rendered BookingForm */}
-            </li>
-            {/* // More list elements */}
+            {breweries.map((brewery) => {
+              // console.log("Inside breweries map: ", brewery);
+              /* Destructuring brewery object to get necessary keys for data rendering */
+              const {
+                id,
+                name,
+                brewery_type: breweryType,
+                street,
+                city,
+                postal_code: postalCode,
+                phone,
+                website_url: websiteUrl,
+              } = brewery;
+
+              return (
+                <li key={id}>
+                  <h2>{name}</h2>
+                  <div className="type">{breweryType}</div>
+                  <section className="address">
+                    <h3>Address:</h3>
+                    <p>{street ? street : "N/A"}</p>
+                    <p>
+                      <strong>
+                        {city}, {postalCode}
+                      </strong>
+                    </p>
+                  </section>
+                  <section className="phone">
+                    <h3>Phone:</h3>
+                    <p>{phone ? phone : "N/A"}</p>
+                  </section>
+                  <section className="booking">
+                    <button>Book a tour</button>
+                  </section>
+                  <section className="link">
+                    <a href={websiteUrl} target="_blank" rel="noreferrer">
+                      Visit Website
+                    </a>
+                  </section>
+                  {/* Conditionally rendered BookingForm */}
+                </li>
+              );
+            })}
           </ul>
         </article>
       </main>
