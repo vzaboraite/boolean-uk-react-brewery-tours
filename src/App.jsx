@@ -64,7 +64,11 @@ export default function App() {
 
   const handleSelectStateSubmit = (event) => {
     event.preventDefault();
-    getBreweriesByState(selectState);
+    if (selectState === "") {
+      setBreweries([]);
+    } else {
+      getBreweriesByState(selectState);
+    }
   };
 
   /* Filter section handlers */
