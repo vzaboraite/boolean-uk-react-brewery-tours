@@ -1,10 +1,10 @@
 import React from "react";
 
-function ListSection({ breweries, onSubmit, onChange }) {
+function ListSection({ stateName, breweries, onSubmit, onChange }) {
   // console.log("Inside ListSection: ", breweries);
   return (
     <>
-      <h1>List of Breweries from New York</h1>
+      <h1>List of Breweries from {stateName}</h1>
       <header className="search-bar">
         <form id="search-breweries-form" autoComplete="off" onSubmit={onSubmit}>
           <label htmlFor="search-breweries">

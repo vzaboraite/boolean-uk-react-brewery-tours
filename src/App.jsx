@@ -97,6 +97,18 @@ export default function App() {
     setSearch("");
   };
 
+  /* Function used to capitalise state name to render at the top of `ListSection` */
+  /* Resource: https://www.freecodecamp.org/news/how-to-capitalize-words-in-javascript/ */
+  const capitaliseStateName = (selectedState) => {
+    const splittedWords = selectedState.split(" ");
+    const capitalisedWords = splittedWords.map(
+      (word) => word.charAt(0).toUpperCase() + word.slice(1)
+    );
+    const capitalisedStateName = capitalisedWords.join(" ");
+
+    return capitalisedStateName;
+  };
+
   /* COMPONENT */
   return (
     <>
@@ -114,6 +126,7 @@ export default function App() {
             handleCityCheckbox={handleCityCheckbox}
           />
           <ListSection
+            stateName={capitaliseStateName(selectState)}
             breweries={breweries}
             onChange={handleSearchBreweriesInput}
             onSubmit={handleSearchBreweriesSubmit}
