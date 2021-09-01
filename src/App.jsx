@@ -12,6 +12,8 @@ export default function App() {
   const [type, setType] = useState("");
   const [city, setCity] = useState([]);
   const [search, setSearch] = useState("");
+  /* Derived state */
+  const cities = getCities(breweries);
 
   console.log("State: ", {
     selectState,
@@ -64,11 +66,11 @@ export default function App() {
   };
 
   /* City list extracted from breweries state to use in `FilterSection` cities checkboxes */
-  useEffect(() => {
-    const extractedCities = breweries.map((brewery) => brewery.city);
+  function getCities(breweryList) {
+    const extractedCities = breweryList.map((brewery) => brewery.city);
     const uniqueCities = [...new Set(extractedCities)].sort();
-    setCities(uniqueCities);
-  }, [breweries]);
+    return uniqueCities;
+  }
 
   /*  HANDLER FUNCTIONS */
   /* Header Section */
