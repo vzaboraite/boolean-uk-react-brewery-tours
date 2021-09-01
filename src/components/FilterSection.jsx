@@ -10,14 +10,6 @@ function FilterSection(props) {
     handleCityCheckbox,
   } = props;
 
-  // console.log("Inside FilterSection: ", {
-  //   cities,
-  //   handleClearAllButton,
-  //   handleTypeOptionsChange,
-  //   handleCityCheckbox,
-  //   isChecked,
-  // });
-
   /* COMPONENT */
   return (
     <aside className="filters-section">
