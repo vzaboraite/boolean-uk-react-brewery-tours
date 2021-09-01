@@ -10,13 +10,13 @@ function FilterSection(props) {
     handleCityCheckbox,
   } = props;
 
-  console.log("Inside FilterSection: ", {
-    cities,
-    handleClearAllButton,
-    handleTypeOptionsChange,
-    handleCityCheckbox,
-    isChecked,
-  });
+  // console.log("Inside FilterSection: ", {
+  //   cities,
+  //   handleClearAllButton,
+  //   handleTypeOptionsChange,
+  //   handleCityCheckbox,
+  //   isChecked,
+  // });
 
   /* COMPONENT */
   return (
@@ -46,7 +46,6 @@ function FilterSection(props) {
       </div>
       <form id="filter-by-city-form">
         {cities.map((city) => {
-          // console.log("Inside cities map: ", city);
           const lowercasedCity = city.toLowerCase();
           return (
             // Here using explicit `React.Fragment` in order to be able to use `key` attribute

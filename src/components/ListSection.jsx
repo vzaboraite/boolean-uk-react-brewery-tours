@@ -1,7 +1,6 @@
 import React from "react";
 
 function ListSection({ stateName, breweries, search, onSubmit, onChange }) {
-  // console.log("Inside ListSection: ", breweries);
   return (
     <>
       <h1>List of Breweries from {stateName}</h1>
@@ -22,7 +21,6 @@ function ListSection({ stateName, breweries, search, onSubmit, onChange }) {
       <article>
         <ul className="breweries-list">
           {breweries.map((brewery) => {
-            // console.log("Inside breweries map: ", brewery);
             /* Destructuring brewery object to get necessary keys for data rendering */
             const {
               id,
