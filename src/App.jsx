@@ -31,8 +31,37 @@ export default function App() {
       .then((res) => res.json())
       .then((breweriesData) => {
         // console.log("breweriesData inside selectState fetch: ", breweriesData);
-        setBreweries(breweriesData);
+        const filteredBreweries = cleanData(breweriesData);
+        setBreweries(filteredBreweries);
       });
+
+  /*
+       This function modifies the data got from API. It's called in `getBreweriesByState()`
+      before adding breweriesData got from the fetch request to breweries state.  
+  */
+  const cleanData = (breweryList) => {
+    const filteredBreweries = breweryList.filter((brewery) => {
+      const type = brewery["brewery_type"];
+
+      switch (type) {
+        case "micro":
+          return true;
+          break;
+        case "regional":
+          return true;
+          break;
+        case "brewpub":
+          return true;
+          break;
+        default:
+          return false;
+          break;
+      }
+    });
+
+    console.log("Inside cleanData: ", filteredBreweries);
+    return filteredBreweries;
+  };
 
   /* City list extracted from breweries state to use in `FilterSection` cities checkboxes */
   useEffect(() => {
