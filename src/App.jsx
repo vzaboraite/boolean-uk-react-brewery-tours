@@ -105,19 +105,21 @@ export default function App() {
         onChange={handleSelectStateInput}
         onSubmit={handleSelectStateSubmit}
       />
-      <main>
-        <FilterSection
-          cities={cities}
-          handleClearAllButton={handleClearAllButton}
-          handleTypeOptionsChange={handleTypeOptionsChange}
-          handleCityCheckbox={handleCityCheckbox}
-        />
-        <ListSection
-          breweries={breweries}
-          onChange={handleSearchBreweriesInput}
-          onSubmit={handleSearchBreweriesSubmit}
-        />
-      </main>
+      {breweries.length > 0 && (
+        <main>
+          <FilterSection
+            cities={cities}
+            handleClearAllButton={handleClearAllButton}
+            handleTypeOptionsChange={handleTypeOptionsChange}
+            handleCityCheckbox={handleCityCheckbox}
+          />
+          <ListSection
+            breweries={breweries}
+            onChange={handleSearchBreweriesInput}
+            onSubmit={handleSearchBreweriesSubmit}
+          />
+        </main>
+      )}
     </>
   );
 }
