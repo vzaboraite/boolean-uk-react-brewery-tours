@@ -14,6 +14,7 @@ export default function App() {
   const [search, setSearch] = useState("");
   /* Derived state */
   const cities = getCities(breweries);
+  const breweriesToRender = applyUserFilters(breweries);
 
   console.log("State: ", {
     selectState,
@@ -140,6 +141,54 @@ export default function App() {
     return capitalisedStateName;
   };
 
+  /* FILTER FUNCTIONS */
+
+  function applyUserFilters(breweryList) {
+    const filteredByType = filterByType(breweryList);
+    const filteredByCity = filterByCity(filteredByType);
+    const filteredBySearch = filterBySearch(filteredByCity);
+
+    return filteredBySearch;
+  }
+
+  function filterByType(berweryList) {
+    if (type === "") {
+      return berweryList;
+    }
+
+    const filteredBreweries = berweryList.filter(
+      (brewery) => brewery["brewery_type"] === type
+    );
+
+    return filteredBreweries;
+  }
+
+  function filterByCity(breweryList) {
+    if (city.length === 0) {
+      return breweryList;
+    }
+
+    const filteredBreweries = breweryList.filter((brewery) =>
+      city.includes(brewery.city.toLowerCase())
+    );
+    return filteredBreweries;
+  }
+
+  function filterBySearch(breweryList) {
+    if (search === "") {
+      return breweryList;
+    }
+
+    const filteredBreweries = breweryList.filter((brewery) => {
+      return (
+        brewery.name.toLowerCase().includes(search) ||
+        brewery.city.toLowerCase().includes(search)
+      );
+    });
+
+    return filteredBreweries;
+  }
+
   /* COMPONENT */
   return (
     <>
@@ -158,7 +207,7 @@ export default function App() {
           />
           <ListSection
             stateName={capitaliseStateName(selectState)}
-            breweries={breweries}
+            breweries={breweriesToRender}
             onChange={handleSearchBreweriesInput}
             onSubmit={handleSearchBreweriesSubmit}
           />
