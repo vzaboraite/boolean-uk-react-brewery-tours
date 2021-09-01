@@ -121,7 +121,7 @@ export default function App() {
     console.log("Inside handleSearchBreweriesSubmit: ", event.target.value);
   };
 
-  /* Resets type and city states to initial values */
+  /* Resets type, city and search filter states to initial values */
   const handleClearAllButton = (event) => {
     console.log("Inside handleClearAllButton: ", event.target);
     setType("");
@@ -201,13 +201,16 @@ export default function App() {
         <main>
           <FilterSection
             cities={cities}
-            handleClearAllButton={handleClearAllButton}
+            type={type}
+            cityFilter={city}
+            onClick={handleClearAllButton}
             handleTypeOptionsChange={handleTypeOptionsChange}
             handleCityCheckbox={handleCityCheckbox}
           />
           <ListSection
             stateName={capitaliseStateName(selectState)}
             breweries={breweriesToRender}
+            search={search}
             onChange={handleSearchBreweriesInput}
             onSubmit={handleSearchBreweriesSubmit}
           />

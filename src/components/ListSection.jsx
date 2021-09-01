@@ -1,6 +1,6 @@
 import React from "react";
 
-function ListSection({ stateName, breweries, onSubmit, onChange }) {
+function ListSection({ stateName, breweries, search, onSubmit, onChange }) {
   // console.log("Inside ListSection: ", breweries);
   return (
     <>
@@ -15,6 +15,7 @@ function ListSection({ stateName, breweries, onSubmit, onChange }) {
             name="search-breweries"
             type="text"
             onChange={onChange}
+            value={search}
           />
         </form>
       </header>

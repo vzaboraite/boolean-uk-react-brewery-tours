@@ -3,10 +3,11 @@ import React from "react";
 function FilterSection(props) {
   const {
     cities,
-    handleClearAllButton,
+    type,
+    cityFilter,
+    onClick,
     handleTypeOptionsChange,
     handleCityCheckbox,
-    isChecked,
   } = props;
 
   console.log("Inside FilterSection: ", {
@@ -30,15 +31,23 @@ function FilterSection(props) {
           id="filter-by-type"
           onChange={handleTypeOptionsChange}
         >
-          <option value="">Select a type...</option>
-          <option value="micro">Micro</option>
-          <option value="regional">Regional</option>
-          <option value="brewpub">Brewpub</option>
+          <option value="" selected={type === ""}>
+            Select a type...
+          </option>
+          <option value="micro" selected={type === "micro"}>
+            Micro
+          </option>
+          <option value="regional" selected={type === "regional"}>
+            Regional
+          </option>
+          <option value="brewpub" selected={type === "brewpub"}>
+            Brewpub
+          </option>
         </select>
       </form>
       <div className="filter-by-city-heading">
         <h3>Cities</h3>
-        <button className="clear-all-btn" onClick={handleClearAllButton}>
+        <button className="clear-all-btn" onClick={onClick}>
           clear all
         </button>
       </div>
@@ -55,6 +64,7 @@ function FilterSection(props) {
                 name={lowercasedCity}
                 value={lowercasedCity}
                 onChange={handleCityCheckbox}
+                checked={cityFilter.includes(lowercasedCity)}
               />
               <label htmlFor={lowercasedCity}>{city}</label>
             </React.Fragment>
