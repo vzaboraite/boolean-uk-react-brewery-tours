@@ -6,6 +6,7 @@ import ListSection from "./components/ListSection";
 export default function App() {
   /* STATE */
   const [selectState, setSelectState] = useState("");
+  const [selectedState, setSelectedState] = useState("");
   const [breweries, setBreweries] = useState([]);
   /* Filter states */
   const [type, setType] = useState("");
@@ -69,6 +70,7 @@ export default function App() {
     } else {
       getBreweriesByState(selectState);
     }
+    setSelectedState(selectState);
   };
 
   /* Filter section handlers */
@@ -183,7 +185,7 @@ export default function App() {
             handleCityCheckbox={handleCityCheckbox}
           />
           <ListSection
-            stateName={capitaliseStateName(selectState)}
+            stateName={capitaliseStateName(selectedState)}
             breweries={breweriesToRender}
             search={search}
             onChange={handleSearchBreweriesInput}
