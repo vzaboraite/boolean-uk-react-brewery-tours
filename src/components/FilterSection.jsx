@@ -29,20 +29,13 @@ function FilterSection(props) {
         <select
           name="filter-by-type"
           id="filter-by-type"
+          value={type}
           onChange={handleTypeOptionsChange}
         >
-          <option value="" selected={type === ""}>
-            Select a type...
-          </option>
-          <option value="micro" selected={type === "micro"}>
-            Micro
-          </option>
-          <option value="regional" selected={type === "regional"}>
-            Regional
-          </option>
-          <option value="brewpub" selected={type === "brewpub"}>
-            Brewpub
-          </option>
+          <option value="">Select a type...</option>
+          <option value="micro">Micro</option>
+          <option value="regional">Regional</option>
+          <option value="brewpub">Brewpub</option>
         </select>
       </form>
       <div className="filter-by-city-heading">
