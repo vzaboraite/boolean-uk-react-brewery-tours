@@ -16,7 +16,7 @@ export default function App() {
   const [search, setSearch] = useState("");
   /* Derived state */
   const cities = getCities(breweries);
-  const breweriesToRender = applyUserFilters(breweries);
+  const breweriesToRender = getBreweriesToRender(breweries);
 
   /* API */
 
@@ -109,6 +109,17 @@ export default function App() {
   };
 
   /* FILTER FUNCTIONS */
+
+  /* Function generates limited number of breweries to render */
+
+  function getBreweriesToRender(breweryList) {
+    const filteredBreweries = applyUserFilters(breweryList);
+    if (filteredBreweries.length > 10) {
+      return filteredBreweries.slice(0, 10);
+    }
+
+    return filteredBreweries;
+  }
 
   function applyUserFilters(breweryList) {
     const filteredByType = filterByType(breweryList);
