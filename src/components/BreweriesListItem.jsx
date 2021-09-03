@@ -32,12 +32,13 @@ function BreweriesListItem({ brewery }) {
       <section className="booking">
         <button>Book a tour</button>
       </section>
-      <section className="link">
-        <a href={websiteUrl} target="_blank" rel="noreferrer">
-          Visit Website
-        </a>
-      </section>
-      {/* Conditionally rendered BookingForm */}
+      {websiteUrl ? (
+        <section className="link">
+          <a href={websiteUrl} target="_blank" rel="noreferrer">
+            Visit Website
+          </a>
+        </section>
+      ) : null}
     </li>
   );
 }
