@@ -1,4 +1,5 @@
 import React from "react";
+import BookingForm from "./BookingForm";
 
 function BreweriesListItem({ brewery }) {
   /* Destructuring brewery object to get necessary keys for data rendering */
@@ -29,16 +30,25 @@ function BreweriesListItem({ brewery }) {
         <h3>Phone:</h3>
         <p>{phone ? phone : "N/A"}</p>
       </section>
-      <section className="booking">
-        <button>Book a tour</button>
-      </section>
-      {websiteUrl ? (
-        <section className="link">
-          <a href={websiteUrl} target="_blank" rel="noreferrer">
-            Visit Website
-          </a>
+      <div id="booking">
+        <section className="booking">
+          <button
+            onClick={(event) => {
+              console.log(event.target);
+            }}
+          >
+            Book a tour
+          </button>
         </section>
-      ) : null}
+        <section className="link">
+          {websiteUrl ? (
+            <a href={websiteUrl} target="_blank" rel="noreferrer">
+              Visit Website
+            </a>
+          ) : null}
+        </section>
+      </div>
+      <BookingForm />
     </li>
   );
 }

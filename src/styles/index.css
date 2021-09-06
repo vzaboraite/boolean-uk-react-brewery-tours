@@ -234,3 +234,31 @@ article {
   text-decoration: none;
   font-weight: bold;
 }
+
+#booking {
+  display: grid;
+  grid-template-areas: "booking link";
+  place-content: end;
+  place-items: center;
+  gap: 1rem;
+}
+
+.breweries-list li .booking button {
+  grid-area: booking;
+}
+
+.breweries-list li .booking button {
+  padding: 0.5rem 1rem;
+
+  border-radius: 0.25rem;
+  border: none;
+  color: #000;
+
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
