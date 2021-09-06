@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FilterSection from "./components/FilterSection";
 import Header from "./components/Header";
 import ListSection from "./components/ListSection";
@@ -6,29 +6,39 @@ import { capitalise } from "./utils/StringUtils";
 
 export default function App() {
   /* STATE */
-  const [selectState, setSelectState] = useState("");
-  /* This state stores State name that is rendered in ListSection heading */
   const [selectedState, setSelectedState] = useState("");
+  /* This state stores State name that is keeping track of user input */
+  const [selectedStateInput, setSelectedStateInput] = useState("");
   const [breweries, setBreweries] = useState([]);
+  const [cities, setCities] = useState([]);
   /* Filter states */
   const [type, setType] = useState("");
   const [city, setCity] = useState([]);
   const [search, setSearch] = useState("");
   /* Derived state */
-  const cities = getCities(breweries);
   const breweriesToRender = getBreweriesToRender(breweries);
 
   /* API */
+  useEffect(() => {
+    if (selectedState) {
+      fetch(
+        `https://api.openbrewerydb.org/breweries?by_state=${selectedState}&per_page=50`
+      )
+        .then((res) => res.json())
+        .then((breweriesData) => {
+          const filteredBreweries = cleanData(breweriesData);
+          // set brewery list with these breweries that has either one of these brewery types: micro, regional, brewpub.
+          setBreweries(filteredBreweries);
+        });
+    } else {
+      setBreweries([]);
+    }
+  }, [selectedState]);
 
-  const getBreweriesByState = (selectedState) =>
-    fetch(
-      `https://api.openbrewerydb.org/breweries?by_state=${selectedState}&per_page=50`
-    )
-      .then((res) => res.json())
-      .then((breweriesData) => {
-        const filteredBreweries = cleanData(breweriesData);
-        setBreweries(filteredBreweries);
-      });
+  useEffect(() => {
+    const citiesData = getCities(breweries);
+    setCities(citiesData);
+  }, [breweries]);
 
   /*
        This function modifies the data got from API. It's called in `getBreweriesByState()`
@@ -37,18 +47,12 @@ export default function App() {
   const cleanData = (breweryList) => {
     const filteredBreweries = breweryList.filter((brewery) => {
       const type = brewery["brewery_type"];
-
-      switch (type) {
-        case "micro":
-          return true;
-        case "regional":
-          return true;
-        case "brewpub":
-          return true;
-        default:
-          return false;
-      }
+      const types = ["micro", "regional", "brewpub"];
+      /* Checking if types array includes one of the brewery types
+       and adding brewery object with matching type into filteredBreweries array. */
+      return types.includes(type);
     });
+    console.log({ filteredBreweries });
     return filteredBreweries;
   };
 
@@ -62,17 +66,29 @@ export default function App() {
   /*  HANDLER FUNCTIONS */
   /* Header Section */
   const handleSelectStateInput = (event) => {
-    setSelectState(event.target.value);
+    console.log("Inside handleSelectStateInput: ", event.target.value);
+    setSelectedStateInput(event.target.value);
   };
 
   const handleSelectStateSubmit = (event) => {
     event.preventDefault();
-    if (selectState === "") {
-      setBreweries([]);
-    } else {
-      getBreweriesByState(selectState);
-    }
-    setSelectedState(selectState);
+    /* TODO: Figure out the way that converting input to selectedStateInputClean
+wouldn't mess up the US state name in ListSection heading `List of breweries from ${stateName}`
+*/
+    // this variable stores snake-cased state name, which is used in url
+    // const selectedStateInputClean = selectedStateInput
+    //   .toLowerCase()
+    //   .split(" ")
+    //   .join("_");
+
+    // // there can be used url encoding %20, representing space to separate
+    // // states' name if it's composed from more than one word
+    // const selectedStateInputClean = selectedStateInput
+    //   .toLowerCase()
+    //   .split(" ")
+    //   .join("%20");
+
+    setSelectedState(selectedStateInput);
   };
 
   /* Filter section handlers */
@@ -171,7 +187,7 @@ export default function App() {
   return (
     <>
       <Header
-        selectState={selectState}
+        // selectState={selectedState}
         onChange={handleSelectStateInput}
         onSubmit={handleSelectStateSubmit}
       />

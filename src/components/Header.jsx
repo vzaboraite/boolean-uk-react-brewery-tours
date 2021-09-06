@@ -9,7 +9,7 @@ export default function Header({ selectState, onChange, onSubmit }) {
             id="select-state"
             name="select-state"
             type="text"
-            value={selectState}
+            // value={selectState}
             onChange={onChange}
           />
         </form>
